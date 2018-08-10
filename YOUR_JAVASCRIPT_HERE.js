@@ -1,3 +1,4 @@
+// did this code to test mocha.
 var hero ={
     name: '',
     heroic: true,
@@ -16,7 +17,14 @@ var hero ={
 class Screen{
   center(){
     // from this point on, first arg is x and second is y.
-    return {w: this.w / 2, h: this.h / 2}
+    return {x: this.w / 2, y: this.h / 2}
+  }
+
+  drawTextCenter(str){
+    let d = this.center()
+    this.ctx.font="15px white Arial"
+    this.ctx.textAlign = 'center'; 
+    this.ctx.fillText("Johan was here", d.x, d.y); 
   }
 
   constructor(){
@@ -24,24 +32,12 @@ class Screen{
     this.ctx =  this.canvas.getContext("2d"),
     this.w =  this.canvas.width
     this.h =  this.canvas.height
+
+    ctx.fillStyle = "black"
   }
 }
 
 const screen = new Screen()
-
-ctx.fillStyle = "black"
-
-ctx.font = 'normal bold 20px "Press Start 2P"'; 
-ctx.textAlign = 'center'; 
-
-
-
-ctx.font="15px white Arial"
-ctx.fillText("Johan was here", w_center, h_center); 
-
-
-const 
-
 
 
 // start process
