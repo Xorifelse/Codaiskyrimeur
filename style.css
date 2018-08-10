@@ -1,0 +1,137 @@
+@font-face {
+  font-family: 'Press Start 2P';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Press Start 2P Regular'), local('PressStart2P-Regular'), url(https://fonts.gstatic.com/s/pressstart2p/v6/e3t4euO8T-267oIAQAu6jDQyK0nS.ttf) format('truetype');
+}
+body{
+
+}
+/*
+  GRID
+*/
+
+.container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-areas: 
+    "title_left title_left title title_right title_right"
+    "left stats_hero main stats_enemy right"
+    "action_left action_left action action_right action_right"
+    "footer footer footer footer footer";
+  grid-template-columns: 0.5fr 1fr 4fr 1fr 0.5fr;
+  grid-template-rows: 0.2fr 1fr 0.3fr 0.10fr;
+}
+
+.container > div {
+  height: 100%;
+  width: 100%;
+
+}
+  
+.title_left {
+   grid-area: title_left;
+}
+.title {
+  font-family: 'Press Start 2P';
+  grid-area: title;
+}
+.title_right {
+  grid-area: title_right;
+}
+.left {
+  grid-area: left;
+}
+.stats_hero {
+  grid-area: stats_hero;
+}
+.main {
+  grid-area: main;
+}
+.stats_enemy {
+  grid-area: stats_enemy;
+}
+.right-1 {
+  grid-area: right;
+}
+.action_left {
+  grid-area: action_left;
+}
+.action {
+  grid-area: action;
+}
+.action_right {
+  grid-area: action_right;
+}
+.footer {
+  font-family: 'Press Start 2P';
+  grid-area: footer;
+}
+
+/*
+  OTHER
+*/
+
+
+.main > canvas{
+  height: 100%;
+  width: 100%;
+}
+.title{
+  font-size: 3em;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.footer{
+  font-size: 1em;
+  text-align: center;
+}
+.actions{
+  display: flex;
+  height: 100%;
+}
+.actions div{
+  font-family: 'Press Start 2P';
+  display: flex;
+  width: 25%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+.actions div:nth-child(1){background: blue;}
+.actions div:nth-child(2){background: red;}
+.actions div:nth-child(3){background: yellow;}
+.actions div:nth-child(4){background: green;}
+.action div:hover{
+  background: #abc;
+  cursor: crosshair;
+}
+
+.footer{
+  padding-top: 40px;
+}
+.stats_hero > div > ul{
+  margin-top: 20px;
+}
+.stats_enemy{
+  padding-left: 5px;
+}
+.stats_enemy > div > ul{
+  margin-top: 20px;
+}
+
+.stats_hero > div > ul > li:nth-child(2) > progress[value]{color: red !important;}
+
+
+
+
+
+
+
+#main{
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+}
