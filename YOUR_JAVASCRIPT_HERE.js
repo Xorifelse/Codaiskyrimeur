@@ -15,8 +15,7 @@ var hero ={
 
 // My code
 class Screen{
-  center(){
-    // from this point on, first arg is x and second is y.
+  center(){ // return center of screen
     return {x: this.w / 2, y: this.h / 2}
   }
 
@@ -39,34 +38,34 @@ class Screen{
 
 const screen = new Screen()
 
+// array contains lyrics, and the second value determins when the next one should display
+const intro = [
+    ['Welcome to my little project..', 10],
+    ['Welcome to my little project..', 10],
+    ['Welcome to my little project..', 10],
+    ['Welcome to my little project..', 10],
+    ['Welcome to my little project..', 10],
+    ['Welcome to my little project..', 10],
+    ['Dovahkiin, Dovahkiin', 100],
+    ['Naal ok zin los vahriin', 100],
+    ['Wah dein vokul mahfaeraak ahst vaal!', 100],
+    ['Ahrk fin norok paal graan', 100],
+    ['Fod nust hon zindro zaan', 100],
+    ['Dovahkiin, fah hin kogaan mu draal!']
+]
+
 
 // start process
 const init = () => {
-  screen.ctx.fillStyle = "black"         // set screen to black
-    // Start audio of the game
-    // Not storing these files on git, only working on my local computer.
-    var audio = new Audio('./audio/theme.mp3')
-    //audio.play();
+  var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
+                                                // Not storing these files on git, only working on my local computer.
+  //audio.play();                               // leave it out for now.
 
-    // array contains lyrics, and the second value determins when the next one should display
-    let intro = [
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Dovahkiin, Dovahkiin', 100],
-        ['Naal ok zin los vahriin', 100],
-        ['Wah dein vokul mahfaeraak ahst vaal!', 100],
-        ['Ahrk fin norok paal graan', 100],
-        ['Fod nust hon zindro zaan', 100],
-        ['Dovahkiin, fah hin kogaan mu draal!']
-    ]
+  $.each(intro, (k, v) = {
+    // started creating class Screen.
 
-    $.each(intro, (i, v) = {
-      // started creating class Screen.
-    })
+    console.log(k, v)
+  })
 }
 
 init();
