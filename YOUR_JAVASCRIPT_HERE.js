@@ -44,10 +44,12 @@ const
 
 
 
-
+// start process
 const init = () => {
-  screen.ctx.fillStyle = "black"
-    var audio = new Audio('theme.mp3')
+  screen.ctx.fillStyle = "black"         // set screen to black
+    // Start audio of the game
+    // Not storing these files on git, only working on my local computer.
+    var audio = new Audio('./audio/theme.mp3')
     //audio.play();
 
     // array contains lyrics, and the second value determins when the next one should display
@@ -67,7 +69,7 @@ const init = () => {
     ]
 
     $.each(intro, (i, v) = {
-
+      // started creating class Screen.
     })
 }
 
