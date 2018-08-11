@@ -283,7 +283,12 @@ new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you
       }
     },
     () => {
-
+      let i = getRandomInt(1, 10)
+      if (i > 5) {
+        screen.dialog('A ')
+      } else {
+        screen.dialog('You walked down the road into a new area')
+      }
     },
     () => {
       rest()
