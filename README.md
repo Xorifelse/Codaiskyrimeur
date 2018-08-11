@@ -68,3 +68,4 @@ Such as canvas editing as this is a new experience for me to work with sprites.
 
 But without the use of library's it takes very long to get it right, because this was about knowing how to write JS without the use of external lirbary's.
 
+Overall I am proud of the result, but just in case I will write the official program tomorrow and commit so you can see how its not a real challange.
