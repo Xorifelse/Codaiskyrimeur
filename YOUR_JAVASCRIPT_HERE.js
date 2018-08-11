@@ -45,7 +45,6 @@ class Screen{
   }
 
   heroRect(){
-
     return [50, 50, 350, 250, 20, this.ye/2, this.xe, this.ye / 2]
   }
 
@@ -123,10 +122,9 @@ class Controls{
   }
 
   bindAll(fn){
-    for(i in fn){
-      this.btn[i].click(()=>{
-        fn[i]()
-      })
+    for(let i in fn){
+      console.log(i)
+      this.bind(i, fn[i])
     }
   }
 
@@ -151,8 +149,7 @@ class Controls{
 const scenarioList = []
 const randomScenario = () => {
   let i = getRandomInt(0, scenarioList.length - 1)
-  console.log('Selected scenario: ' + i)
-  console.log(scenarioList[i])
+  console.log('Doing selected scenario: ' + i)
   return scenarioList[i]
 }
 class Scenario{
@@ -162,9 +159,10 @@ class Scenario{
   }
 
   write(text, buttons, callback){
-    $('#gametext > span').html(`<span>${text}</span>`)
-    input.setText(buttons)
-    input.bindAll(callback)
+    console.log(text)
+    $('#gametext > span').html(`<span>${text ? text : this.text }</span>`)
+    input.setText(text ? text : this.actions)
+    input.bindAll(callback ? callback : this.callback)
   }
 
   constructor(imgsrc, text, actions, callback){
