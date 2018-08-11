@@ -1,29 +1,47 @@
 var hero = {
-    name: false,
-    class: false,
+  name: false,
+  class: false,
 
-    // stats
-    health: 10,
-    maxHealth: 10,
-    mana: 10,
-    maxMana: 10,
-    stamina: 10,
-    maxStamina: 10,
-    shout: 10,
-    maxShout: 10,
+  // stats
+  health: 10,
+  maxHealth: 10,
+  mana: 10,
+  maxMana: 10,
+  stamina: 10,
+  maxStamina: 10,
+  shout: 10,
+  maxShout: 10,
 
-    // items
-    inventory: [],
-    weapon: {
-      type: 'something',
-      damage: 2
-    },
+  // items
+  inventory: [],
+  weapon: {
+    type: 'something',
+    damage: 2
+  },
 
-    // other
-    img: new Image(), // contains class image
-    heroic: true      // satisfy mocha
-  }
+  // other
+  img: new Image(), // contains class image
+  heroic: true      // satisfy mocha
 }
+
+const intro = [              // array contains lyrics, and the second value determins when the next one should display
+  ['To my little project...', 4,],
+  ['Last saturday ...', 6],
+  ['was probably hectic', 8],
+  ['Quite some coding', 10],
+  ['Went into this', 12],
+  ['This screen you see', 14],
+  ['Is drawn by code', 16],
+  ['I call it...', 18],
+  ['CODAISkyrimSEUR',20],
+  ['Dovahkiin!!, Dovahkiin!!', 22],
+  ['Naal ok zin los vahriin', 23],
+  ['Wah dein vokul mahfaeraak ahst vaal!', 24],
+  ['Ahrk fin norok paal graan', 25],
+  ['Fod nust hon zindro zaan', 26],
+  ['Dovahkiin, fah hin kogaan mu draal!', 27],
+  ['Yeah yeah, you can skip intro now', 30]
+]
 
 const updateStats = () => {
   $('health').attr('value', hero.health)
@@ -219,24 +237,6 @@ class Scenario{
 // Definitions
 const screen = new Screen()  // Screen object
 const input = new Controls() // Enable dynamic interaction with user input
-const intro = [              // array contains lyrics, and the second value determins when the next one should display
-  ['To my little project...', 4,],
-  ['Last saturday ...', 6],
-  ['was probably hectic', 8],
-  ['Quite some coding', 10],
-  ['Went into this', 12],
-  ['This screen you see', 14],
-  ['Is drawn by code', 16],
-  ['I call it...', 18],
-  ['CODAISkyrimSEUR',20],
-  ['Dovahkiin!!, Dovahkiin!!', 22],
-  ['Naal ok zin los vahriin', 23],
-  ['Wah dein vokul mahfaeraak ahst vaal!', 24],
-  ['Ahrk fin norok paal graan', 25],
-  ['Fod nust hon zindro zaan', 26],
-  ['Dovahkiin, fah hin kogaan mu draal!', 27],
-  ['Yeah yeah, you can skip intro now', 30]
-]
 
 // Add scenario's
 new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you do?', [
@@ -339,11 +339,11 @@ const mainMenu = () => {
       hero.img.src = './bg/' + (hero.class ? hero.class : 'dragonbourne') + '.png'
 
       // disabled for easy testing
-      //if(!hero.name || !hero.class){
-      //  alert('No hero name or class setup!')
-      //} else {
+      if(!hero.name || !hero.class){
+        alert('No hero name or class setup!')
+      } else {
         startGame()
-      //}
+      }
     })
 
     // exit game
@@ -359,10 +359,10 @@ const mainMenu = () => {
 // intro
 var stopIntro = false
 const playIntro = () => {
-  //var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
+  var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
                                                 // Not storing these files on git, only working on my local computer (copyright)
-  //audio.play();                               // leave it out for now.
-  //audio.currentTime = 10
+  audio.play();                               // leave it out for now.
+  audio.currentTime = 10
 
   // loop through each title in intro, add them to a sleep callback
   var delay = 0
