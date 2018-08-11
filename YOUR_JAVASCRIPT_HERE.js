@@ -37,7 +37,6 @@ class Screen{
 
   fill(color="white"){
     this.ctx.fillStyle = color;
-    console.log(this.borders())
     this.ctx.fillRect(...this.borders());
   }
 
@@ -69,14 +68,34 @@ class Screen{
 }
 
 class Controls{
-  setText(list){
+  bind(i, fn){
+    this.b[i].click(() => {
+      fn()
+    })
+  }
+
+  setText(l){
     var i = 0;
-    for(let t of list){
-      this.b[i++].html(list[i])
+
+    // whipe out all text
+    for(let b of this.b){
+      console.log(this.b)//b.html("")
+    }
+
+    // set new text
+    for(i in l){
+      this.b[i].html(l[i])
     }
   }
+
   constructor(){
     this.b = [$('#btn_a'), $('#btn_b'), $('#btn_c'), $('#btn_d')]
+
+    for(let b of this.b){
+      b.click(() =>{
+        
+      })
+    }
   }
 }
 
@@ -98,7 +117,7 @@ const intro = [              // array contains lyrics, and the second value dete
   ['Wah dein vokul mahfaeraak ahst vaal!', 24],
   ['Ahrk fin norok paal graan', 25],
   ['Fod nust hon zindro zaan', 26],
-  ['Dovahkiin, fah hin kogaan mu draal!', 27]
+  ['Dovahkiin, fah hin kogaan mu draal!', 27],
   ['Yeah yeah, you skip intro now', 30]
 ]
 
@@ -115,8 +134,12 @@ const playIntro = () => {
         screen.drawTextCenter(v[0], 17, "white")
       }
     })
-    
   }
+
+  input.setText(['Skip'])
+  input.bind(0, ()=>{
+    alert('test')
+  })
 
 }
 
@@ -129,6 +152,7 @@ const init = () => {
   
   
   playIntro()
+
 }
 
 init();
