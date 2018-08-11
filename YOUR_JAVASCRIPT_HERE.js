@@ -1,7 +1,7 @@
 // did this code to satisfy mocha.
 const hero ={
     name: false,
-    class: '',
+    class: false,
     heroic: true,
     inventory: [],
     health: 10,
@@ -131,7 +131,6 @@ const intro = [              // array contains lyrics, and the second value dete
 
 // main manu
 const mainMenu = () => {
-  input.unbind()
   screen.fill("black")
 
   var classSelect = () => {
@@ -151,17 +150,19 @@ const mainMenu = () => {
         hero.class = 'Warrior'
         mainMenu()
       })
-      input.bind(1, () => {
+      input.bind(3, () => {
         mainMenu()
       })
     })
   }
 
   var mainScreen = () => {
+    input.unbind()
     input.setText(['Name', 'Class', 'Start', 'Quit'])
-
+    
     // set hero name
     input.bind(0, () => {
+      alert('test2')
       hero.name = window.prompt("Please enter the name of your hero's name:", hero.name ? hero.name : "Dovahkiin")
       mainMenu()
     })
@@ -169,6 +170,20 @@ const mainMenu = () => {
     // bind class select
     input.bind(1, () => {
       classSelect()
+    })
+
+    // start game
+    input.bind(2, () => {
+      if(!hero.name || !hero.class){
+        alert('No hero name or class setup!')
+      } else {
+        startGame()
+      }
+    })
+
+    // exit game
+    input.bind(3, () => {
+      alert("Did you take an arrow to the knee?")
     })
   }
 
