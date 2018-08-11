@@ -61,10 +61,10 @@ const init = () => {
                                                 // Not storing these files on git, only working on my local computer.
   //audio.play();                               // leave it out for now.
 
-  $.each(intro, (k, v) = {
+  $.each(intro, (k, v) => {
     // started creating class Screen.
-
-    console.log(k, v)
+    console.log(v)
+    
   })
 }
 
