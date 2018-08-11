@@ -1,6 +1,7 @@
 // did this code to satisfy mocha.
 const hero ={
     name: false,
+    class: '',
     heroic: true,
     inventory: [],
     health: 10,
@@ -69,19 +70,21 @@ class Screen{
 
 class Controls{
 
-  // Unbind click events de
+  // Unbind click event, if no args are given all events
   unbind(id){
     // loop over key of args
     if(typeof id == 'undefined'){
       for(let btn of this.buttons){
         btn.off()
       }
+    } else if(typeof id == 'integer'){
+      this.btn[id].off()
     }
   }
 
   // bind onclick event to button on id
   bind(i, fn){
-    this.b[i].click(() => {
+    this.buttons[i].click(() => {
       fn()
     })
   }
@@ -94,7 +97,7 @@ class Controls{
 
     // set new text
     for(let i in l){
-      this.b[i].html(l[i])
+      this.buttons[i].html(l[i])
     }
   }
 
@@ -128,12 +131,50 @@ const intro = [              // array contains lyrics, and the second value dete
 
 // main manu
 const mainMenu = () => {
+  input.unbind()
   screen.fill("black")
-  input.setText(['Name', 'Class', '', 'Quit'])
-  input.bind(0, () => {
-    hero.name = window.prompt("Please enter the name of your hero's name:", hero.name ? hero.name : "Dovahkiin")
-    $('#hero_name').html(hero.name)
-  })
+
+  var classSelect = () => {
+    input.unbind()
+    input.bind(1, () => {
+      input.setText(['Dragonborne', 'Mage', 'Warrior', 'Back'])
+      
+      input.bind(0, () => {
+        hero.class = 'Dragonborne'
+        mainMenu()
+      })
+      input.bind(1, () => {
+        hero.class = 'Mage'
+        mainMenu()
+      })
+      input.bind(2, () => {
+        hero.class = 'Warrior'
+        mainMenu()
+      })
+      input.bind(1, () => {
+        mainMenu()
+      })
+    })
+  }
+
+  var mainScreen = () => {
+    input.setText(['Name', 'Class', 'Start', 'Quit'])
+
+    // set hero name
+    input.bind(0, () => {
+      hero.name = window.prompt("Please enter the name of your hero's name:", hero.name ? hero.name : "Dovahkiin")
+      mainMenu()
+    })
+
+    // bind class select
+    input.bind(1, () => {
+      classSelect()
+    })
+  }
+
+  $('#hero_name').html(hero.name)
+  mainScreen()
+  classSelect()
 }
 
 // intro
