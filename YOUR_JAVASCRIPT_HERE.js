@@ -74,6 +74,7 @@ class Controls{
   unbind(id){
     // loop over key of args
     if(typeof id == 'undefined'){
+      alert('unbind all')
       for(let btn of this.buttons){
         btn.off()
       }
@@ -135,34 +136,30 @@ const mainMenu = () => {
 
   var classSelect = () => {
     input.unbind()
+    input.setText(['Dragonborne', 'Mage', 'Warrior', 'Back'])
+    input.bind(0, () => {
+      hero.class = 'Dragonborne'
+      mainMenu()
+    })
     input.bind(1, () => {
-      input.setText(['Dragonborne', 'Mage', 'Warrior', 'Back'])
-      
-      input.bind(0, () => {
-        hero.class = 'Dragonborne'
-        mainMenu()
-      })
-      input.bind(1, () => {
-        hero.class = 'Mage'
-        mainMenu()
-      })
-      input.bind(2, () => {
-        hero.class = 'Warrior'
-        mainMenu()
-      })
-      input.bind(3, () => {
-        mainMenu()
-      })
+      hero.class = 'Mage'
+      mainMenu()
+    })
+    input.bind(2, () => {
+      hero.class = 'Warrior'
+      mainMenu()
+    })
+    input.bind(3, () => {
+      mainMenu()
     })
   }
 
   var mainScreen = () => {
     input.unbind()
     input.setText(['Name', 'Class', 'Start', 'Quit'])
-    
+
     // set hero name
     input.bind(0, () => {
-      alert('test2')
       hero.name = window.prompt("Please enter the name of your hero's name:", hero.name ? hero.name : "Dovahkiin")
       mainMenu()
     })
@@ -189,7 +186,6 @@ const mainMenu = () => {
 
   $('#hero_name').html(hero.name)
   mainScreen()
-  classSelect()
 }
 
 // intro
