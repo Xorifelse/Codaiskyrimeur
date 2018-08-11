@@ -1,5 +1,5 @@
-# Beginner Bootcamp Homework
 
+<<<<<<< HEAD
 Hello beginner bootcampers. Here is your first formal homework  assignment!
 
 
@@ -68,3 +68,5 @@ Because of this, "I expect you give this homework assignment your best shot" I w
 Such as canvas editing as this is a new experience for me to work with sprites.
 
 But without the use of library's it takes very long to get it right, because this was about knowing how to write JS without the use of external lirbary's.
+=======
+>>>>>>> cad65e9c21feeae093e2a1a0fa5143d93da1b46d

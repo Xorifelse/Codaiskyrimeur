@@ -23,14 +23,19 @@
             <span id="hero_name">HeroName</span>
             <ul>
               <li>Health</li>
-              <li><progress value="10" max="10"></progress></li>
+              <li><progress id="health" value="10" max="10"></progress></li>
               <li>Mana</li>
-              <li><progress value="5" max="5"></progress></li>
+              <li><progress id="mana" value="5" max="5"></progress></li>
               <li>Stamina</li>
-              <li><progress value="7" max="7"></progress></li>
+              <li><progress id="stamina" value="7" max="7"></progress></li>
               <li>Shout</li>
-              <li><progress value="9" max="9"></progress></li>
+              <li><progress id=""value="9" max="9"></progress></li>
             </ul>
+            <div>
+                <ul id="inventory">
+                    <li></li>
+                  </ul>
+            </div>
         </div>
       </div>
       <div class="main">
@@ -51,19 +56,25 @@
       <div class="action_left"></div>
       <div class="action">
         <div class="actions">
-            <div>Action 1</div>
-            <div>Action 2</div>
-            <div>Action 3</div>
-            <div>Action 4</div>
+            <div id="btn_a"></div>
+            <div id="btn_b"></div>
+            <div id="btn_c"></div>
+            <div id="btn_d"></div>
         </div>
       </div>
       <div class="action_right"></div>
       <div class="footer">
-        <span>Absolutely <b>not</b> copyrighted &copy;</span><br>
+        <span id="gametext">Absolutely <b>not</b> copyrighted &copy;</span><br>
       </div>
     </div>
   
-
+    <div style="display: none">
+      <!-- load images in DOM not displaying them -->
+      <img src="./bg/warrior.png">
+      <img src="./bg/mage.png">
+      <img src="./bg/dragonbourne.png">
+      <img src="./bg/1.png">
+    </div>
     <div id="mocha"></div>
   
     <script src="https://unpkg.com/chai@4.1.2/chai.js"></script>
