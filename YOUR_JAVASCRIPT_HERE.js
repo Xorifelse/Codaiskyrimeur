@@ -46,8 +46,9 @@ class Screen{
   }
 
 
-  drawTextCenter(str, color){
-    this.ctx.font = "30px Arial";
+  drawTextCenter(str, size, color){
+    this.redraw()
+    this.ctx.font = size + "px Arial";
     this.ctx.fillStyle =  color;
     this.ctx.textAlign = 'center'; 
     this.ctx.fillText(str, ...this.center());
@@ -63,38 +64,55 @@ class Screen{
     this.bgc = "black"
 
     this.fill("black")
-    this.drawTextCenter("Welcome..", "white")
+    this.drawTextCenter("Welcome..", 25, "white")
+  }
+}
+
+class Controls{
+  setText(list){
+    var i = 0;
+    for(let t of list){
+      this.b[i++].html(list[i])
+    }
+  }
+  constructor(){
+    this.b = [$('#btn_a'), $('#btn_b'), $('#btn_c'), $('#btn_d')]
   }
 }
 
 // Definitions
-const screen = new Screen() // Screen object
-const intro = [             // array contains lyrics, and the second value determins when the next one should display
-  ['Welcome to my little project..', 5],
-  ['Welcome to my little project..', 40],
-  ['Welcome to my little project..', 45],
-  ['Welcome to my little project..', 46],
-  ['Welcome to my little project..', 47],
-  ['Dovahkiin, Dovahkiin', 4],
-  ['Naal ok zin los vahriin', 4],
-  ['Wah dein vokul mahfaeraak ahst vaal!', 4],
-  ['Ahrk fin norok paal graan', 4],
-  ['Fod nust hon zindro zaan', 4],
-  ['Dovahkiin, fah hin kogaan mu draal!', 3]
+const screen = new Screen()  // Screen object
+const input = new Controls() // Enable dynamic interaction with user input
+const intro = [              // array contains lyrics, and the second value determins when the next one should display
+  ['To my little project...', 4,],
+  ['Last saturday ...', 6],
+  ['was probably hectic', 8],
+  ['Quite some coding', 10],
+  ['Went into this', 12],
+  ['This screen you see', 14],
+  ['Is drawn by code', 16],
+  ['I call it...', 18],
+  ['CODAISkyrimSEUR',20],
+  ['Dovahkiin!!, Dovahkiin!!', 22],
+  ['Naal ok zin los vahriin', 23],
+  ['Wah dein vokul mahfaeraak ahst vaal!', 24],
+  ['Ahrk fin norok paal graan', 25],
+  ['Fod nust hon zindro zaan', 26],
+  ['Dovahkiin, fah hin kogaan mu draal!', 27]
+  ['Yeah yeah, you skip intro now', 30]
 ]
 
 
 // intro
 var stopIntro = false
 const playIntro = () => {
+  var delay = 0
   for(let v of intro){
-    let delay = v[1]++
+    delay =+ v[1]
 
-
-    console.log(v[0])
-    sleep(v[1]).then(() => {
+    sleep(v[1] + delay).then(() => {
       if(!stopIntro){
-        screen.drawTextCenter(v[0])
+        screen.drawTextCenter(v[0], 17, "white")
       }
     })
     
@@ -107,6 +125,8 @@ const init = () => {
   var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
                                                 // Not storing these files on git, only working on my local computer.
   //audio.play();                               // leave it out for now.
+  //audio.currentTime = 10
+  
   
   playIntro()
 }
