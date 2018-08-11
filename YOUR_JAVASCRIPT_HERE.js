@@ -2,6 +2,7 @@
 const hero ={
     name: false,
     class: false,
+    img: new Image(),
     heroic: true,
     inventory: [],
     health: 10,
@@ -21,6 +22,10 @@ const pickUpItem = () => {}
 const equipWeapon = () => {}
 
 
+// var decs
+var started = false;
+
+
 // function space
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time * 1000));
@@ -36,6 +41,11 @@ class Screen{
     return [0, 0, this.xe, this.ye]
   }
 
+  heroRect(){
+
+    return [50, 50, 350, 250, 0, this.ye/2, this.xe, this.ye / 2]
+  }
+
   fill(color="white"){
     this.ctx.fillStyle = color;
     this.ctx.fillRect(...this.fullScreen());
@@ -49,16 +59,18 @@ class Screen{
     if(typeof this.bg == 'string'){
       this.fill(this.bg)
     } else {
-      this.ctx.drawImage(this.bg, 0,0,300,150)
+      this.ctx.drawImage(this.bg, ...this.fullScreen())
     }
   }
 
-  heroImg(){
 
-  }
 
   redraw(){
     this.drawBg()
+    if(started){
+      alert('drawing hero')
+      this.ctx.drawImage(hero.img, ...this.heroRect())
+    }
   }
 
 
@@ -107,6 +119,14 @@ class Controls{
     })
   }
 
+  bindAll(fn){
+    for(i in fn){
+      this.btn[i].click(()=>{
+        fn[i]()
+      })
+    }
+  }
+
   setText(l){
     // whipe out text from all buttons
     for(let btn of this.buttons){
@@ -125,12 +145,33 @@ class Controls{
   }
 }
 
+const scenarioList = []
+const randomScenario = () => {
+  return scenarioList[Math.floor(Math.random() * scenarioList.length--)]
+}
 class Scenario{
-  constructor(imgsrc, text, actions){
-    screen.bg = new Image();
-    screen.bg.src = './bg/1.png'
-    screen.ctx.drawImage(screen.bg, 0,0, 300, 150);
+  setBG(){
+    screen.bg = this.bg
+    screen.redraw()
+  }
 
+  write(text, buttons, callback){
+    $('#gametext > span').html(`<span>${text}</span>`)
+    input.setText(buttons)
+    input.bindAll(callback)
+  }
+
+  constructor(imgsrc, text, actions, callback){
+    let img = new Image()
+    img.src = imgsrc
+
+    this.bg = img
+    this.text = text
+    this.actions = actions
+    this.callback = callback
+
+    scenarioList.push(this)
+    console.log(scenarioList)
   }
 }
 
@@ -156,11 +197,38 @@ const intro = [              // array contains lyrics, and the second value dete
   ['Yeah yeah, you can skip intro now', 30]
 ]
 
+// Add scenario's
+    new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you do?',[
+      'Climb It!!',
+      'Walk around',
+      'Other Direction',
+      'Rest',
+    ], [
+      () => {
+        alert('a')
+      },
+      () => {
+        alert('a')
+      },
+      () => {
+        alert('a')
+      },
+      () => {
+        alert('a')
+      },
+    ])
+
 const startGame = () => {
   //
   screen.bgc = false;
   //
-  var scene = new Scenario()
+  started = true;
+
+  alert('were here')
+  let scn = randomScenario()
+  console.log(scenarioList)
+  scn.write()
+  scn.setBG()
 
   // Game over!
   /*
@@ -180,15 +248,15 @@ const mainMenu = () => {
     input.unbind()
     input.setText(['Dragonborne', 'Mage', 'Warrior', 'Back'])
     input.bind(0, () => {
-      hero.class = 'Dragonborne'
+      hero.class = 'dragonborne'
       mainMenu()
     })
     input.bind(1, () => {
-      hero.class = 'Mage'
+      hero.class = 'mage'
       mainMenu()
     })
     input.bind(2, () => {
-      hero.class = 'Warrior'
+      hero.class = 'warrior'
       mainMenu()
     })
     input.bind(3, () => {
@@ -213,6 +281,9 @@ const mainMenu = () => {
 
     // start game
     input.bind(2, () => {
+      hero.class = 'mage'
+      hero.img.src = './bg/' + (hero.class ? hero.class : 'dragonbourne') + '.png'
+
       // disabled for easy testing
       //if(!hero.name || !hero.class){
       //  alert('No hero name or class setup!')
@@ -234,7 +305,7 @@ const mainMenu = () => {
 // intro
 var stopIntro = false
 const playIntro = () => {
-  var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
+  //var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
                                                 // Not storing these files on git, only working on my local computer (copyright)
   //audio.play();                               // leave it out for now.
   //audio.currentTime = 10
