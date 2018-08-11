@@ -68,6 +68,13 @@ class Screen{
 }
 
 class Controls{
+  unbind(...args){
+    for(let b of args){
+      console.log(this.b)//b.html("")
+    }
+    this.b[i].off()
+  }
+
   bind(i, fn){
     this.b[i].click(() => {
       fn()
@@ -79,7 +86,7 @@ class Controls{
 
     // whipe out all text
     for(let b of this.b){
-      console.log(this.b)//b.html("")
+      b.html("")
     }
 
     // set new text
@@ -125,6 +132,12 @@ const intro = [              // array contains lyrics, and the second value dete
 // intro
 var stopIntro = false
 const playIntro = () => {
+  var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
+                                                // Not storing these files on git, only working on my local computer (copyright)
+  //audio.play();                               // leave it out for now.
+  //audio.currentTime = 10
+
+
   var delay = 0
   for(let v of intro){
     delay =+ v[1]
@@ -138,21 +151,16 @@ const playIntro = () => {
 
   input.setText(['Skip'])
   input.bind(0, ()=>{
-    alert('test')
+    stopIntro = true;
+    input.setText(['Name', 'Class', 'Weapon', 'Quit'])
+
   })
 
 }
 
 // start process
 const init = () => {
-  var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
-                                                // Not storing these files on git, only working on my local computer.
-  //audio.play();                               // leave it out for now.
-  //audio.currentTime = 10
-  
-  
   playIntro()
-
 }
 
 init();
