@@ -87,13 +87,15 @@ class Screen{
     }
   }
 
-
-
   redraw(){
     this.drawBg()
     if(started){
       this.ctx.drawImage(hero.img, ...this.heroRect())
     }
+  }
+
+  dialog(text){
+    $('#gametext').html(`<span>${text}</span>`)
   }
 
 
@@ -235,7 +237,18 @@ const intro = [              // array contains lyrics, and the second value dete
       'Rest',
     ], [
       () => {
-        alert('a')
+        let i = getRandomInt(1,10)
+        if(i > 8){
+          screen.dialog('You fell from the rocks and took some damage')
+          hero.health =- getRandomInt(1,3)
+        } else if(i > 5){
+          screen.dialog('You encountered an enemy on your way up!')
+          // init battle
+        } else if(i > 2){
+          screen.dialog('You have found an item')
+        } else {
+          screen.dialog('You climbed on the top of the mountain, uneventfull climb')
+        }
       },
       () => {
         alert('a')
