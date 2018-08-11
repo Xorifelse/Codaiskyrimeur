@@ -51,3 +51,20 @@ Follow the tests in the browser
 - Implement fighting an enemy. (how you do it is up to you!)
 
 - When an enemy or weapon gets clicked it gets deleted from the page
+
+
+
+
+## I wasn't able to finish my project
+I wanted to create a whole GUI around it, I hit some snags and it took me long to figure out.
+Even created a SO question for it: https://stackoverflow.com/questions/51800635/variable-is-pushed-but-it-doesnt-exist-later
+
+It delayed the time I had to implement the fighting system, with enemy's updating their status as well
+And I wasn't able to finish the main Scenario loop, but you can very easily add new Scenes with the use of a simple API.
+
+They were supposed call actions, such as fighting scenes.
+
+Because of this, "I expect you give this homework assignment your best shot" I wanted to learn something new in the process as well.
+Such as canvas editing as this is a new experience for me to work with sprites.
+
+But without the use of library's it takes very long to get it right, because this was about knowing how to write JS without the use of external lirbary's.
