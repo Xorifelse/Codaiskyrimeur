@@ -1,16 +1,38 @@
 // did this code to satisfy mocha.
-const hero ={
+const hero = {
     name: false,
     class: false,
     img: new Image(),
     heroic: true,
     inventory: [],
+
     health: 10,
+    maxHealth: 10,
+    mana: 10,
+    maxMana: 10,
+    stamina: 10,
+    maxStamina: 10,
+    shout: 10,
+    maxShout: 10,
+
     weapon: {
         type: 'something',
         damage: 2
     }
 }
+
+const updateStats = () => {
+  $('health').attr('value', hero.health)
+  $('health').attr('max', hero.maxHealth)
+  $('mana').attr('value', hero.mana)
+  $('mana').attr('max', hero.maxMana)
+  $('stamina').attr('value', hero.stamina)
+  $('stamina').attr('max', hero.maxStamina)
+  $('shout').attr('value', hero.shout)
+  $('shout').attr('max', hero.maxShout)
+}
+
+setTimeout(updateStats(), 1000)
 
 
 const rest = (o) => {
@@ -45,7 +67,7 @@ class Screen{
   }
 
   heroRect(){
-    return [50, 50, 350, 250, 20, this.ye/2, this.xe, this.ye / 2]
+    return [0, 0, 157, 222, 0, 0, 157, 222]
   }
 
   fill(color="white"){
@@ -70,7 +92,6 @@ class Screen{
   redraw(){
     this.drawBg()
     if(started){
-      alert('drawing hero')
       this.ctx.drawImage(hero.img, ...this.heroRect())
     }
   }
@@ -146,6 +167,11 @@ class Controls{
   }
 }
 
+const actionList = []
+class Action{
+  constructor(){}
+}
+
 const scenarioList = []
 const randomScenario = () => {
   let i = getRandomInt(0, scenarioList.length - 1)
@@ -160,8 +186,9 @@ class Scenario{
 
   write(text, buttons, callback){
     console.log(text)
-    $('#gametext > span').html(`<span>${text ? text : this.text }</span>`)
+    $('#gametext').html(`<span>${text ? text : this.text }</span>`)
     input.setText(text ? text : this.actions)
+    input.unbind()
     input.bindAll(callback ? callback : this.callback)
   }
 
@@ -227,7 +254,6 @@ const startGame = () => {
   //
   started = true;
 
-  alert('were here')
   let scn = randomScenario()
   console.log(scn)
   scn.write()
