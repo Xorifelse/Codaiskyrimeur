@@ -22,7 +22,7 @@ const equipWeapon = () => {}
 
 
 // function space
-function sleep (time) {
+function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time * 1000));
 }
 
@@ -32,17 +32,33 @@ class Screen{
     return [this.xe / 2, this.ye / 2]
   }
 
-  borders(){
+  fullScreen(){
     return [0, 0, this.xe, this.ye]
   }
 
   fill(color="white"){
     this.ctx.fillStyle = color;
-    this.ctx.fillRect(...this.borders());
+    this.ctx.fillRect(...this.fullScreen());
+  }
+
+  drawImg(img, ...pos){
+    this.ctx.drawImage(img, ...pos())
+  }
+
+  drawBg(){
+    if(typeof this.bg == 'string'){
+      this.fill(this.bg)
+    } else {
+      this.ctx.drawImage(this.bg, 0,0,300,150)
+    }
+  }
+
+  heroImg(){
+
   }
 
   redraw(){
-    this.fill(this.bgc)
+    this.drawBg()
   }
 
 
@@ -61,7 +77,7 @@ class Screen{
     this.ys = 0
     this.xe = this.canvas.width
     this.ye = this.canvas.height
-    this.bgc = "black"
+    this.bg = "black"
 
     this.fill("black")
     this.drawTextCenter("Welcome..", 25, "white")
@@ -74,10 +90,12 @@ class Controls{
   unbind(id){
     // loop over key of args
     if(typeof id == 'undefined'){
+      // remove all bindings
       for(let btn of this.buttons){
         btn.off()
       }
-    } else if(typeof id == 'integer'){
+    } else if(typeof id == 'number'){
+      // remove specific binding
       this.btn[id].off()
     }
   }
@@ -107,9 +125,11 @@ class Controls{
   }
 }
 
-class Scenario(){
-  constructor(bgimg, text, actions){
-    
+class Scenario{
+  constructor(imgsrc, text, actions){
+    screen.bg = new Image();
+    screen.bg.src = './bg/1.png'
+    screen.ctx.drawImage(screen.bg, 0,0, 300, 150);
 
   }
 }
@@ -117,7 +137,6 @@ class Scenario(){
 // Definitions
 const screen = new Screen()  // Screen object
 const input = new Controls() // Enable dynamic interaction with user input
-const scene = new Scenario() //
 const intro = [              // array contains lyrics, and the second value determins when the next one should display
   ['To my little project...', 4,],
   ['Last saturday ...', 6],
@@ -138,6 +157,19 @@ const intro = [              // array contains lyrics, and the second value dete
 ]
 
 const startGame = () => {
+  //
+  screen.bgc = false;
+  //
+  var scene = new Scenario()
+
+  // Game over!
+  /*
+  screen.fill("black")
+  screen.drawTextCenter("Game Over!", 30, "red")
+  sleep(5).then(() => {
+    // should reset stats, etc.
+    mainMenu()
+  })*/
 }
 
 // main manu
@@ -181,11 +213,12 @@ const mainMenu = () => {
 
     // start game
     input.bind(2, () => {
-      if(!hero.name || !hero.class){
-        alert('No hero name or class setup!')
-      } else {
+      // disabled for easy testing
+      //if(!hero.name || !hero.class){
+      //  alert('No hero name or class setup!')
+      //} else {
         startGame()
-      }
+      //}
     })
 
     // exit game
