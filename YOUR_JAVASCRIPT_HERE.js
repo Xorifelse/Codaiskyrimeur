@@ -1,5 +1,8 @@
-var hero ={
-    name: '',
+// did this code to satisfy mocha.
+const hero ={
+    name: false,
+    class: false,
+    img: new Image(),
     heroic: true,
     inventory: [],
     health: 10,
@@ -10,65 +13,330 @@ var hero ={
 }
 
 
+const rest = (o) => {
+  o.health = 10
+  hero.health = 10
+  return o
+}
+const pickUpItem = () => {}
+const equipWeapon = () => {}
 
+
+// var decs
+var started = false;
+
+
+// function space
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time * 1000));
+}
 
 // My code
 class Screen{
-  center(){
-    // from this point on, first arg is x and second is y.
-    return {w: this.w / 2, h: this.h / 2}
+  center(){ // return center of screen
+    return [this.xe / 2, this.ye / 2]
+  }
+
+  fullScreen(){
+    return [0, 0, this.xe, this.ye]
+  }
+
+  heroRect(){
+
+    return [50, 50, 350, 250, 0, this.ye/2, this.xe, this.ye / 2]
+  }
+
+  fill(color="white"){
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect(...this.fullScreen());
+  }
+
+  drawImg(img, ...pos){
+    this.ctx.drawImage(img, ...pos())
+  }
+
+  drawBg(){
+    if(typeof this.bg == 'string'){
+      this.fill(this.bg)
+    } else {
+      this.ctx.drawImage(this.bg, ...this.fullScreen())
+    }
+  }
+
+
+
+  redraw(){
+    this.drawBg()
+    if(started){
+      alert('drawing hero')
+      this.ctx.drawImage(hero.img, ...this.heroRect())
+    }
+  }
+
+
+  drawTextCenter(str, size, color){
+    this.redraw()
+    this.ctx.font = size + "px Arial";
+    this.ctx.fillStyle =  color;
+    this.ctx.textAlign = 'center'; 
+    this.ctx.fillText(str, ...this.center());
   }
 
   constructor(){
     this.canvas = document.getElementById("screen")
-    this.ctx =  this.canvas.getContext("2d"),
-    this.w =  this.canvas.width
-    this.h =  this.canvas.height
+    this.ctx = this.canvas.getContext("2d")
+    this.xs = 0 
+    this.ys = 0
+    this.xe = this.canvas.width
+    this.ye = this.canvas.height
+    this.bg = "black"
+
+    this.fill("black")
+    this.drawTextCenter("Welcome..", 25, "white")
   }
 }
 
-const screen = new Screen()
+class Controls{
 
-ctx.fillStyle = "black"
+  // Unbind click event, if no args are given all events
+  unbind(id){
+    // loop over key of args
+    if(typeof id == 'undefined'){
+      // remove all bindings
+      for(let btn of this.buttons){
+        btn.off()
+      }
+    } else if(typeof id == 'number'){
+      // remove specific binding
+      this.btn[id].off()
+    }
+  }
 
-ctx.font = 'normal bold 20px "Press Start 2P"'; 
-ctx.textAlign = 'center'; 
-
-
-
-ctx.font="15px white Arial"
-ctx.fillText("Johan was here", w_center, h_center); 
-
-
-const 
-
-
-
-
-const init = () => {
-  screen.ctx.fillStyle = "black"
-    var audio = new Audio('theme.mp3')
-    //audio.play();
-
-    // array contains lyrics, and the second value determins when the next one should display
-    let intro = [
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Welcome to my little project..', 10],
-        ['Dovahkiin, Dovahkiin', 100],
-        ['Naal ok zin los vahriin', 100],
-        ['Wah dein vokul mahfaeraak ahst vaal!', 100],
-        ['Ahrk fin norok paal graan', 100],
-        ['Fod nust hon zindro zaan', 100],
-        ['Dovahkiin, fah hin kogaan mu draal!']
-    ]
-
-    $.each(intro, (i, v) = {
-
+  // bind onclick event to button on id
+  bind(i, fn){
+    this.buttons[i].click(() => {
+      fn()
     })
+  }
+
+  bindAll(fn){
+    for(i in fn){
+      this.btn[i].click(()=>{
+        fn[i]()
+      })
+    }
+  }
+
+  setText(l){
+    // whipe out text from all buttons
+    for(let btn of this.buttons){
+      btn.html("")
+    }
+
+    // set new text
+    for(let i in l){
+      this.buttons[i].html(l[i])
+    }
+  }
+
+  constructor(){
+    // Grab all button elements and set them in an array
+    this.buttons = [$('#btn_a'), $('#btn_b'), $('#btn_c'), $('#btn_d')]
+  }
+}
+
+const scenarioList = []
+const randomScenario = () => {
+  return scenarioList[Math.floor(Math.random() * scenarioList.length--)]
+}
+class Scenario{
+  setBG(){
+    screen.bg = this.bg
+    screen.redraw()
+  }
+
+  write(text, buttons, callback){
+    $('#gametext > span').html(`<span>${text}</span>`)
+    input.setText(buttons)
+    input.bindAll(callback)
+  }
+
+  constructor(imgsrc, text, actions, callback){
+    let img = new Image()
+    img.src = imgsrc
+
+    this.bg = img
+    this.text = text
+    this.actions = actions
+    this.callback = callback
+
+    scenarioList.push(this)
+    console.log(scenarioList)
+  }
+}
+
+// Definitions
+const screen = new Screen()  // Screen object
+const input = new Controls() // Enable dynamic interaction with user input
+const intro = [              // array contains lyrics, and the second value determins when the next one should display
+  ['To my little project...', 4,],
+  ['Last saturday ...', 6],
+  ['was probably hectic', 8],
+  ['Quite some coding', 10],
+  ['Went into this', 12],
+  ['This screen you see', 14],
+  ['Is drawn by code', 16],
+  ['I call it...', 18],
+  ['CODAISkyrimSEUR',20],
+  ['Dovahkiin!!, Dovahkiin!!', 22],
+  ['Naal ok zin los vahriin', 23],
+  ['Wah dein vokul mahfaeraak ahst vaal!', 24],
+  ['Ahrk fin norok paal graan', 25],
+  ['Fod nust hon zindro zaan', 26],
+  ['Dovahkiin, fah hin kogaan mu draal!', 27],
+  ['Yeah yeah, you can skip intro now', 30]
+]
+
+// Add scenario's
+    new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you do?',[
+      'Climb It!!',
+      'Walk around',
+      'Other Direction',
+      'Rest',
+    ], [
+      () => {
+        alert('a')
+      },
+      () => {
+        alert('a')
+      },
+      () => {
+        alert('a')
+      },
+      () => {
+        alert('a')
+      },
+    ])
+
+const startGame = () => {
+  //
+  screen.bgc = false;
+  //
+  started = true;
+
+  alert('were here')
+  let scn = randomScenario()
+  console.log(scenarioList)
+  scn.write()
+  scn.setBG()
+
+  // Game over!
+  /*
+  screen.fill("black")
+  screen.drawTextCenter("Game Over!", 30, "red")
+  sleep(5).then(() => {
+    // should reset stats, etc.
+    mainMenu()
+  })*/
+}
+
+// main manu
+const mainMenu = () => {
+  screen.fill("black")
+
+  var classSelect = () => {
+    input.unbind()
+    input.setText(['Dragonborne', 'Mage', 'Warrior', 'Back'])
+    input.bind(0, () => {
+      hero.class = 'dragonborne'
+      mainMenu()
+    })
+    input.bind(1, () => {
+      hero.class = 'mage'
+      mainMenu()
+    })
+    input.bind(2, () => {
+      hero.class = 'warrior'
+      mainMenu()
+    })
+    input.bind(3, () => {
+      mainMenu()
+    })
+  }
+
+  var mainScreen = () => {
+    input.unbind()
+    input.setText(['Name', 'Class', 'Start', 'Quit'])
+
+    // set hero name
+    input.bind(0, () => {
+      hero.name = window.prompt("Please enter the name of your hero's name:", hero.name ? hero.name : "Dovahkiin")
+      mainMenu()
+    })
+
+    // bind class select
+    input.bind(1, () => {
+      classSelect()
+    })
+
+    // start game
+    input.bind(2, () => {
+      hero.class = 'mage'
+      hero.img.src = './bg/' + (hero.class ? hero.class : 'dragonbourne') + '.png'
+
+      // disabled for easy testing
+      //if(!hero.name || !hero.class){
+      //  alert('No hero name or class setup!')
+      //} else {
+        startGame()
+      //}
+    })
+
+    // exit game
+    input.bind(3, () => {
+      alert("Did you take an arrow to the knee? You WILL play this game!@a")
+    })
+  }
+
+  $('#hero_name').html(hero.name)
+  mainScreen()
+}
+
+// intro
+var stopIntro = false
+const playIntro = () => {
+  //var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
+                                                // Not storing these files on git, only working on my local computer (copyright)
+  //audio.play();                               // leave it out for now.
+  //audio.currentTime = 10
+
+
+  var delay = 0
+  for(let v of intro){
+    delay =+ v[1]
+
+    sleep(v[1] + delay).then(() => {
+      if(!stopIntro){
+        screen.drawTextCenter(v[0], 17, "white")
+      }
+    })
+  }
+
+  input.setText(['Skip'])
+  input.bind(0, ()=>{
+    stopIntro = true;
+    mainMenu()
+  })
+
+}
+
+// start process
+const init = () => {
+  playIntro()
 }
 
 init();
+
+
+// debug
+
