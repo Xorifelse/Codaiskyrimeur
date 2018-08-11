@@ -74,7 +74,6 @@ class Controls{
   unbind(id){
     // loop over key of args
     if(typeof id == 'undefined'){
-      alert('unbind all')
       for(let btn of this.buttons){
         btn.off()
       }
@@ -108,9 +107,17 @@ class Controls{
   }
 }
 
+class Scenario(){
+  constructor(bgimg, text, actions){
+    
+
+  }
+}
+
 // Definitions
 const screen = new Screen()  // Screen object
 const input = new Controls() // Enable dynamic interaction with user input
+const scene = new Scenario() //
 const intro = [              // array contains lyrics, and the second value determins when the next one should display
   ['To my little project...', 4,],
   ['Last saturday ...', 6],
@@ -129,6 +136,9 @@ const intro = [              // array contains lyrics, and the second value dete
   ['Dovahkiin, fah hin kogaan mu draal!', 27],
   ['Yeah yeah, you can skip intro now', 30]
 ]
+
+const startGame = () => {
+}
 
 // main manu
 const mainMenu = () => {
@@ -180,7 +190,7 @@ const mainMenu = () => {
 
     // exit game
     input.bind(3, () => {
-      alert("Did you take an arrow to the knee?")
+      alert("Did you take an arrow to the knee? You WILL play this game!@a")
     })
   }
 
