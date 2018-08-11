@@ -255,18 +255,22 @@ new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you
       if (i > 8) {
         screen.dialog('You fell from the rocks and took some damage')
         hero.health = - getRandomInt(1, 3)
+        wait = true
       } else if (i > 5) {
+        wait = true
         screen.dialog('You encountered an enemy on your way up!')
         // init battle
       } else if (i > 2) {
+        wait = true
         screen.dialog('You have found a sword! + 2 damage')
         hero.inventory.push({
-          weapon: 'A sword'
+          weapon: 'A sword',
           damage: 4
         })
         hero.weapon = hero.inventory[0] // cheap trick for maybe demo :)
         // give item
       } else {
+        wait = true
         screen.dialog('You climbed on the top of the mountain, uneventfull climb')
       }
     },
@@ -289,6 +293,27 @@ new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you
 const startGame = () => {
   screen.bgc = false;
   started = true;
+
+  let scn = randomScenario()
+  console.log(scn)
+  scn.write()
+  scn.setBG()
+
+  // first scenario
+  var wait = true
+  while(wait){
+    if(wait = false){
+      break
+    }
+  }
+
+  // second scenario
+  var wait = true
+  while(wait){
+    if(wait = false){
+      break
+    }
+  }
 
   let scn = randomScenario()
   console.log(scn)
@@ -370,8 +395,8 @@ const mainMenu = () => {
 // intro
 var stopIntro = false
 const playIntro = () => {
-  var audio = new Audio('./audio/theme.mp3')    // Start audio of the game
-                                                // Not storing these files on git, only working on my local computer (copyright)
+  var audio = new Audio('./audio/theme.mp3')  // Start audio of the game
+                                              // Not storing these files on git, only working on my local computer (copyright)
   audio.play();                               // leave it out for now.
   audio.currentTime = 10
 
