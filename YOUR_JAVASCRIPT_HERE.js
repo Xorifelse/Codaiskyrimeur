@@ -1,6 +1,6 @@
 // did this code to satisfy mocha.
 const hero ={
-    name: '',
+    name: false,
     heroic: true,
     inventory: [],
     health: 10,
@@ -68,13 +68,18 @@ class Screen{
 }
 
 class Controls{
-  unbind(...args){
-    for(let b of args){
-      console.log(this.b)//b.html("")
+
+  // Unbind click events de
+  unbind(id){
+    // loop over key of args
+    if(typeof id == 'undefined'){
+      for(let btn of this.buttons){
+        btn.off()
+      }
     }
-    this.b[i].off()
   }
 
+  // bind onclick event to button on id
   bind(i, fn){
     this.b[i].click(() => {
       fn()
@@ -82,27 +87,20 @@ class Controls{
   }
 
   setText(l){
-    var i = 0;
-
-    // whipe out all text
-    for(let b of this.b){
-      b.html("")
+    // whipe out text from all buttons
+    for(let btn of this.buttons){
+      btn.html("")
     }
 
     // set new text
-    for(i in l){
+    for(let i in l){
       this.b[i].html(l[i])
     }
   }
 
   constructor(){
-    this.b = [$('#btn_a'), $('#btn_b'), $('#btn_c'), $('#btn_d')]
-
-    for(let b of this.b){
-      b.click(() =>{
-        
-      })
-    }
+    // Grab all button elements and set them in an array
+    this.buttons = [$('#btn_a'), $('#btn_b'), $('#btn_c'), $('#btn_d')]
   }
 }
 
@@ -125,9 +123,18 @@ const intro = [              // array contains lyrics, and the second value dete
   ['Ahrk fin norok paal graan', 25],
   ['Fod nust hon zindro zaan', 26],
   ['Dovahkiin, fah hin kogaan mu draal!', 27],
-  ['Yeah yeah, you skip intro now', 30]
+  ['Yeah yeah, you can skip intro now', 30]
 ]
 
+// main manu
+const mainMenu = () => {
+  screen.fill("black")
+  input.setText(['Name', 'Class', '', 'Quit'])
+  input.bind(0, () => {
+    hero.name = window.prompt("Please enter the name of your hero's name:", hero.name ? hero.name : "Dovahkiin")
+    $('#hero_name').html(hero.name)
+  })
+}
 
 // intro
 var stopIntro = false
@@ -152,8 +159,7 @@ const playIntro = () => {
   input.setText(['Skip'])
   input.bind(0, ()=>{
     stopIntro = true;
-    input.setText(['Name', 'Class', 'Weapon', 'Quit'])
-
+    mainMenu()
   })
 
 }
