@@ -29,15 +29,19 @@ class Screen{
   constructor(){
     this.canvas = document.getElementById("screen")
     this.ctx =  this.canvas.getContext("2d"),
-    this.w =  this.canvas.width
-    this.h =  this.canvas.height
+    this.xe =  this.canvas.width
+    this.ye =  this.canvas.height
+    this.c = () => this.center()
 
-    ctx.fillStyle = "black"
+    
+
+    this.ctx.fillStyle = "black"
+    this.ctx.fillRect(0, 0, this.xe, this.ye);
   }
 }
 
 const screen = new Screen()
-
+console.log(screen)
 // array contains lyrics, and the second value determins when the next one should display
 const intro = [
     ['Welcome to my little project..', 10],
