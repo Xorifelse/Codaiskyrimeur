@@ -44,14 +44,19 @@ const intro = [              // array contains lyrics, and the second value dete
 ]
 
 const updateStats = () => {
-  $('health').attr('value', hero.health)
-  $('health').attr('max', hero.maxHealth)
-  $('mana').attr('value', hero.mana)
-  $('mana').attr('max', hero.maxMana)
-  $('stamina').attr('value', hero.stamina)
-  $('stamina').attr('max', hero.maxStamina)
-  $('shout').attr('value', hero.shout)
-  $('shout').attr('max', hero.maxShout)
+  $('#health').attr('value', hero.health)
+  $('#health').attr('max', hero.maxHealth)
+  $('#mana').attr('value', hero.mana)
+  $('#mana').attr('max', hero.maxMana)
+  $('#stamina').attr('value', hero.stamina)
+  $('#stamina').attr('max', hero.maxStamina)
+  $('#shout').attr('value', hero.shout)
+  $('#shout').attr('max', hero.maxShout)
+  $('#inventory').empty()
+
+  for(let i of hero.inventory){
+    console.log(i)
+  }
 }
 
 
@@ -254,7 +259,12 @@ new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you
         screen.dialog('You encountered an enemy on your way up!')
         // init battle
       } else if (i > 2) {
-        screen.dialog('You have found an item')
+        screen.dialog('You have found a sword! + 2 damage')
+        hero.inventory.push({
+          weapon: 'A sword'
+          damage: 4
+        })
+        hero.weapon = hero.inventory[0] // cheap trick for maybe demo :)
         // give item
       } else {
         screen.dialog('You climbed on the top of the mountain, uneventfull climb')
@@ -263,12 +273,13 @@ new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you
     () => {
       let i = getRandomInt(1, 10)
       if (i > 5) {
+        screen.dialog('A ')
       } else {
         screen.dialog('You walked down the road into a new area')
       }
     },
     () => {
-      alert('a')
+
     },
     () => {
       rest()
