@@ -1,11 +1,8 @@
-// did this code to satisfy mocha.
-const hero = {
+var hero = {
     name: false,
     class: false,
-    img: new Image(),
-    heroic: true,
-    inventory: [],
 
+    // stats
     health: 10,
     maxHealth: 10,
     mana: 10,
@@ -15,10 +12,17 @@ const hero = {
     shout: 10,
     maxShout: 10,
 
+    // items
+    inventory: [],
     weapon: {
-        type: 'something',
-        damage: 2
-    }
+      type: 'something',
+      damage: 2
+    },
+
+    // other
+    img: new Image(), // contains class image
+    heroic: true      // satisfy mocha
+  }
 }
 
 const updateStats = () => {
@@ -32,13 +36,18 @@ const updateStats = () => {
   $('shout').attr('max', hero.maxShout)
 }
 
-setTimeout(updateStats(), 1000)
+
 
 
 const rest = (o) => {
-  o.health = 10
-  hero.health = 10
-  return o
+  o.health = 10 // satisfy mocha
+  hero.health = maxHealth
+  hero.mana = maxMana
+  hero.stamina = maxStamina
+  hero.shout = maxShout
+  screen.dialog('You walked down the road into a new area')
+  
+  return o // satisfy mocha
 }
 const pickUpItem = () => {}
 const equipWeapon = () => {}
@@ -230,41 +239,44 @@ const intro = [              // array contains lyrics, and the second value dete
 ]
 
 // Add scenario's
-    new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you do?',[
-      'Climb It!!',
-      'Walk around',
-      'Other Direction',
-      'Rest',
-    ], [
-      () => {
-        let i = getRandomInt(1,10)
-        if(i > 8){
-          screen.dialog('You fell from the rocks and took some damage')
-          hero.health =- getRandomInt(1,3)
-        } else if(i > 5){
-          screen.dialog('You encountered an enemy on your way up!')
-          // init battle
-        } else if(i > 2){
-          screen.dialog('You have found an item')
-        } else {
-          screen.dialog('You climbed on the top of the mountain, uneventfull climb')
-        }
-      },
-      () => {
-        alert('a')
-      },
-      () => {
-        alert('a')
-      },
-      () => {
-        alert('a')
-      },
-    ])
+new Scenario('./bg/1.png', 'You look around and see a huge mountain, what do you do?', [
+  'Climb It!!',
+  'Walk around',
+  'Other Direction',
+  'Rest',
+], [
+    () => {
+      let i = getRandomInt(1, 10)
+      if (i > 8) {
+        screen.dialog('You fell from the rocks and took some damage')
+        hero.health = - getRandomInt(1, 3)
+      } else if (i > 5) {
+        screen.dialog('You encountered an enemy on your way up!')
+        // init battle
+      } else if (i > 2) {
+        screen.dialog('You have found an item')
+        // give item
+      } else {
+        screen.dialog('You climbed on the top of the mountain, uneventfull climb')
+      }
+    },
+    () => {
+      let i = getRandomInt(1, 10)
+      if (i > 5) {
+      } else {
+        screen.dialog('You walked down the road into a new area')
+      }
+    },
+    () => {
+      alert('a')
+    },
+    () => {
+      rest()
+    },
+  ])
 
 const startGame = () => {
-  //
   screen.bgc = false;
-  //
   started = true;
 
   let scn = randomScenario()
@@ -352,10 +364,10 @@ const playIntro = () => {
   //audio.play();                               // leave it out for now.
   //audio.currentTime = 10
 
-
+  // loop through each title in intro, add them to a sleep callback
   var delay = 0
   for(let v of intro){
-    delay =+ v[1]
+    delay =+ v[1] // // as time expires, the duration of sleep should increase
 
     sleep(v[1] + delay).then(() => {
       if(!stopIntro){
@@ -364,9 +376,10 @@ const playIntro = () => {
     })
   }
 
+  // timers are set and code directly continues here for so we can skip the intro
   input.setText(['Skip'])
   input.bind(0, ()=>{
-    stopIntro = true;
+    stopIntro = true; // hard global boolean to stop the sleeping functions write text
     mainMenu()
   })
 
@@ -374,7 +387,8 @@ const playIntro = () => {
 
 // start process
 const init = () => {
-  playIntro()
+  playIntro() // start intro
+  setTimeout(updateStats(), 1000) // update the player stats life every second
 }
 
 init();
