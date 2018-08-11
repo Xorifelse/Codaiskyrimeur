@@ -147,7 +147,10 @@ class Controls{
 
 const scenarioList = []
 const randomScenario = () => {
-  return scenarioList[Math.floor(Math.random() * scenarioList.length--)]
+  let i = Math.floor(Math.random() * scenarioList.length - 1); // get random i
+  console.log('Selected scenario: ' + i)
+  console.log(scenarioList[i])
+  return scenarioList[i]
 }
 class Scenario{
   setBG(){
@@ -171,7 +174,6 @@ class Scenario{
     this.callback = callback
 
     scenarioList.push(this)
-    console.log(scenarioList)
   }
 }
 
@@ -226,7 +228,7 @@ const startGame = () => {
 
   alert('were here')
   let scn = randomScenario()
-  console.log(scenarioList)
+  console.log(scn)
   scn.write()
   scn.setBG()
 
