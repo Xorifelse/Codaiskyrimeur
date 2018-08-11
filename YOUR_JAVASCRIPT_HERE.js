@@ -30,6 +30,9 @@ var started = false;
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time * 1000));
 }
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 // My code
 class Screen{
@@ -43,7 +46,7 @@ class Screen{
 
   heroRect(){
 
-    return [50, 50, 350, 250, 0, this.ye/2, this.xe, this.ye / 2]
+    return [50, 50, 350, 250, 20, this.ye/2, this.xe, this.ye / 2]
   }
 
   fill(color="white"){
@@ -147,7 +150,7 @@ class Controls{
 
 const scenarioList = []
 const randomScenario = () => {
-  let i = Math.floor(Math.random() * scenarioList.length - 1); // get random i
+  let i = getRandomInt(0, scenarioList.length - 1)
   console.log('Selected scenario: ' + i)
   console.log(scenarioList[i])
   return scenarioList[i]
